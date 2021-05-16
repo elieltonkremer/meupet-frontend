@@ -1,0 +1,22 @@
+<div id="login-page" class="panel page">
+  <div class="panel-header">
+  </div>
+  <div class="panel-body">
+    <form @submit.prevent="login">
+      <div class="form-group" :class="{'has-error': email_message}">
+        <label for="email" class="form-label">Email</label>
+        <input id="email" :disabled="loading" class="form-input" type="text" v-model="email">
+        <p class="form-input-hint">{{ email_message }}</p>
+      </div>
+      <div class="form-group" :class="{'has-error': password_message}">
+        <label for="password" class="form-label">Senha</label>
+        <input id="password" :disabled="loading" class="form-input" type="password" v-model="password">
+        <p class="form-input-hint">{{ password_message }}</p>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" :class="{disabled: !(password && email), loading: loading}"> Login </button>
+      <div class="form-group has-error">
+        <p class="form-input-hint" style="text-align: center">{{ message }}</p>
+      </div>
+    </form>
+  </div>
+</div>

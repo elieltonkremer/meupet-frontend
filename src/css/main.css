@@ -1,0 +1,72 @@
+body {
+  background-color: #5755d9;
+  min-height: 100% !important;
+  height: 100%;
+}
+
+.page {
+  display: block;
+  background-color: white;
+  animation: fade 0.4s linear;
+  margin: 10px 10px;
+  max-width: calc(100vw - 20px);
+  min-width: 800px;
+  min-height: calc(100vh - 20px);
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.loading > * {
+  filter: blur(1px);
+}
+
+#login-page {
+  margin: 10px auto;
+  width: 400px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  min-height: 0;
+  min-width: 0;
+  transition: all;
+}
+
+@keyframes fade {
+  0%   {
+    -webkit-filter: blur(2px);
+  }
+  100% {
+    -webkit-filter: blur(0px);
+  }
+}
+
+#nav-menu {
+  padding: 0;
+}
+
+.page-layout {
+  height: calc(100vh - 20px);
+}
+.page-layout > .page-menu {
+  width: 340px;
+  height: 100%;
+  float: left;
+  border-right: 1px solid silver;
+  overflow-y: auto;
+}
+.page-layout > .page-content {
+  width: calc(100% - 340px);
+  height: 100%;
+  float: right;
+  overflow-y: auto;
+}
+
+#welcome-page {
+  background-image: url('/static/img/welcome.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
