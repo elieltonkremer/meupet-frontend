@@ -14,6 +14,7 @@
         <p class="form-input-hint">{{ password_message }}</p>
       </div>
       <button type="submit" class="btn btn-primary btn-block" :class="{disabled: !(password && email), loading: loading}"> Login </button>
+      <p class="text-center">Ainda não tem uma conta? <a v-bind:href="('registration')"> Cadastre-se </a></p>
       <div class="form-group has-error">
         <p class="form-input-hint" style="text-align: center">{{ message }}</p>
       </div>

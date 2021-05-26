@@ -1,7 +1,16 @@
 body {
-  background-color: #5755d9;
+  background-color: #F6F7F9;
   min-height: 100% !important;
   height: 100%;
+}
+
+.highlight{
+  display: block;
+  background-color: rgb(202, 70, 70);
+}
+
+.text-center {
+  text-align: center;
 }
 
 .page {
@@ -22,7 +31,21 @@ body {
 
 #login-page {
   margin: 10px auto;
-  width: 400px;
+  width: 20%;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  min-height: 0;
+  min-width: 0;
+  transition: all;
+}
+
+#registration-page {
+  margin: 10px auto;
+  width: 20%;
   margin: 0;
   position: absolute;
   top: 50%;

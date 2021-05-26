@@ -10,6 +10,11 @@ requirejs([], function() {
       component: lazyPage('login')
     },
     {
+      name: 'registration',
+      path: '/registration',
+      component: lazyPage('registration')
+    },    
+    {
       name: 'internal',
       path: '/internal',
       component: lazyPage('internal'),
