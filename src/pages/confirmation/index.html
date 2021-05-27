@@ -1,0 +1,12 @@
+<div id="confirmation-page" class="grid-x grid-padding-x align-center-middle background" style="height: 100vh;">
+    <div class="cell large-3 medium-6 small-9 card">
+        <form @submit.prevent="cofirmation">
+            <div class="" :class="{'has-error': code_message}">
+                <p class="text-center">Enviamos um código de confirmação ao email informado</p>
+                <p class="text-center">Para completar seu cadastro informe o código recebido</p>
+                <input id="code" class="" type="text" v-model="code">
+            </div>          
+            <button type="submit" class="button expanded" :class="{disabled: !(code), loading: loading}"> Validar </button>
+        </form>        
+    </div>
+</div>

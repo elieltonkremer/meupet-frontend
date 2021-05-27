@@ -3,7 +3,7 @@ define([], function() {
     data: function() {
       return {
         loading: false,
-        message: null,
+        message: null,      
         email: null,
         email_message: null,
         password: null,
@@ -18,8 +18,10 @@ define([], function() {
       },
       process_response: function(data) {
         this.loading = false
-        if (data.success)
+        if (data.success) {
+          this.confirmation_code = data.data.confirmation_code
           return
+        }
         if (typeof data.data === 'string') {
           this.message = data.data
         } else {
@@ -29,9 +31,10 @@ define([], function() {
       },
       process_success: function(data) {
         axios.defaults.headers.common['Authorization'] = "Bearer " + data.data.data.token
-        this.$router.push({name:'welcome'})
+        console.log(data.data.confirmation_code)
+        this.$router.push({name:'confirmation'})
       },
-      login: function() {
+      register: function() {
         if (this.loading) {
           return
         }
@@ -39,8 +42,9 @@ define([], function() {
         self.clear()
         self.loading = true;
         setTimeout(function() {
-          axios.post('http://167.172.150.95:3001/login', {
+          axios.post('http://167.172.150.95:3001/register', {
             email: self.email,
+            type: '1',
             password: self.password
           }).then(self.process_success).catch(function(data) {
             console.log(data)

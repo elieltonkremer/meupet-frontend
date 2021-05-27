@@ -6,14 +6,19 @@ requirejs([], function() {
   var routes = [
     {
       name: 'login',
-      path: "/login",
+      path: '/login',
       component: lazyPage('login')
     },
     {
       name: 'registration',
       path: '/registration',
       component: lazyPage('registration')
-    },    
+    },
+    {
+      name: 'confirmation',
+      path: '/confirmation',
+      component: lazyPage('confirmation')
+    },      
     {
       name: 'internal',
       path: '/internal',
