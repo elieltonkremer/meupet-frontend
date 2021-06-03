@@ -15,12 +15,9 @@
   display: block;
   background-color: white;
   animation: fade 0.4s linear;
-  margin: 10px 10px;
   max-width: calc(100vw - 20px);
   min-width: 800px;
   min-height: calc(100vh - 20px);
-  border-radius: 4px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .loading > * {
@@ -63,3 +60,13 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.has-error label, .has-error .help-text {
+  color: #cc4b37;
+}
+.has-error input {
+  border-color: #cc4b37;
+  background-color: #f9ecea;
+}
+
+

@@ -1,5 +1,6 @@
-define([], function() {
+define(['jquery', 'lazy'], function(jquery, lazy) {
   return {
+    components: {waitMe: lazy.Component('waitMe')},
     data: function() {
       return {
         loading: false,
@@ -28,7 +29,9 @@ define([], function() {
         }
       },
       process_success: function(data) {
-        axios.defaults.headers.common['Authorization'] = "Bearer " + data.data.data.token
+        jquery.ajaxSetup({
+          headers: {'Authorization': "Bearer " + data.data.token}
+        })
         this.$router.push({name:'welcome'})
       },
       login: function() {
@@ -37,16 +40,19 @@ define([], function() {
         }
         var self = this;
         self.clear()
-        self.loading = true;
-        setTimeout(function() {
-          axios.post('http://167.172.150.95:3001/login', {
-            email: self.email,
-            password: self.password
-          }).then(self.process_success).catch(function(data) {
-            console.log(data)
-            self.process_response(data.response.data)
-          })
-        }, 1000)
+        this.loading = true
+        jquery.ajax({
+          path: 'login',
+          method: 'post',
+          json: {email: self.email, password: self.password},
+          contentType: 'application/json',
+          success: self.process_success,
+          error: function(response) {
+            if (response.responseJSON) {
+              return self.process_response(response.responseJSON)
+            }
+          }
+        })
       }
     }
   }

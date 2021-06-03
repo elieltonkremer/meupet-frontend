@@ -1,0 +1,15 @@
+<wait-me id="login-page" class="grid-x grid-padding-x align-center-middle background" style="height: 100vh;" :loading="loading">
+    <div class="cell large-3 medium-6 small-9 card">
+        <form @submit.prevent="save" v-if="">
+            <div class="" :class="{'has-error': email_message}">
+                <label for="email" class="form-label">Email</label>
+                <input id="email" class="form-input" type="text" v-model="email">
+                <p class="help-text">{{ email_message }}</p>
+            </div>
+            <button type="submit" class="button expanded" :class="{disabled: !(is_valid)}"> Salvar informaçoes </button>
+            <div class="">
+                <p class="text-center">Ainda não tem uma conta? <a @click.prevent="$router.push({name:'registration'})"> Cadastre-se </a></p>
+            </div>
+        </form>
+    </div>
+</wait-me>

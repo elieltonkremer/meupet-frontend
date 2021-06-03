@@ -1,20 +1,30 @@
-<div id="registration-page" class="grid-x grid-padding-x align-center-middle background" style="height: 100vh;">
+<wait-me id="registration-page" class="grid-x grid-padding-x align-center-middle background" style="height: 100vh;" :loading="loading">
     <div class="cell large-3 medium-6 small-9 card">
         <form @submit.prevent="register">
-            <div class="" :class="{'has-error': name_message}">
-                <label for="name" class="form-label">Nome</label>
-                <input id="name" :disabled="loading" class="" type="text" v-model="name">
-            </div>            
             <div class="" :class="{'has-error': email_message}">
                 <label for="email" class="form-label">Email</label>
                 <input id="email" :disabled="loading" class="" type="text" v-model="email">
+                <p class="help-text">{{ email_message }}</p>
             </div>
             <div class="" :class="{'has-error': password_message}">
                 <label for="password" class="form-label">Senha</label>
                 <input id="password" :disabled="loading" class="" type="password" v-model="password">
-            </div>          
-            <button type="submit" class="button expanded" :class="{disabled: !(password && email), loading: loading}"> Criar conta </button>
-            <p class="text-center">Já possui uma conta? <a v-bind:href="('login')"> Logar </a></p>
+                <p class="help-text">{{ password_message }}</p>
+            </div>
+            <div class="" :class="{'has-error': password_confirmation_message}">
+                <label for="password" class="form-label">Confirmar Senha</label>
+                <input id="password" :disabled="loading" class="" type="password" v-model="password_confirmation">
+                <p class="help-text">{{ password_confirmation_message }}</p>
+            </div>
+            <div class="text-center" :class="{'has-error': type_message}">
+                <input id="tutor" :disabled="loading" type="radio" value="tutor" v-model="type">
+                <label for="tutor" class="form-label">Dono de Pet</label>
+                <input id="veterinary" :disabled="loading" type="radio" value="veterinary" v-model="type">
+                <label for="veterinary" class="form-label">Veterinario</label>
+                <p class="help-text">{{ type_message }}</p>
+            </div>
+            <button type="submit" class="button expanded" :class="{disabled: !is_valid, loading: loading}"> Criar conta </button>
+            <p class="text-center">Já possui uma conta? <a @click.prevent="$router.push({name:'login'})"> Logar </a></p>
         </form>
     </div>
-</div>
+</wait-me>

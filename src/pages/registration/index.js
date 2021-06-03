@@ -1,5 +1,6 @@
-define([], function() {
+define(['lazy', 'jquery'], function(lazy, jquery) {
   return {
+    components: {waitMe: lazy.Component('waitMe')},
     data: function() {
       return {
         loading: false,
@@ -8,6 +9,34 @@ define([], function() {
         email_message: null,
         password: null,
         password_message: null,
+        password_confirmation: null,
+        password_confirmation_message: null,
+        type: null,
+        type_message: null
+      }
+    },
+    computed: {
+      is_valid: function() {
+        return this.email && (!this.email_message) && this.password && (!this.password_message) &&
+            this.password_confirmation && (!this.password_confirmation_message) && this.type && (!this.type_message)
+      }
+    },
+    watch: {
+      email: function() {
+        this.email_message = null;
+      },
+      password: function() {
+        this.password_message = null;
+      },
+      type: function() {
+        this.type_message = null;
+      },
+      password_confirmation: function() {
+        if (this.password_confirmation !== this.password) {
+          this.password_confirmation_message = 'passwords do not match'
+        } else {
+          this.password_confirmation_message = null
+        }
       }
     },
     methods: {
@@ -15,9 +44,9 @@ define([], function() {
         this.message = null
         this.email_message = null
         this.password_message = null
+        this.password_confirmation_message = null
       },
       process_response: function(data) {
-        this.loading = false
         if (data.success) {
           this.confirmation_code = data.data.confirmation_code
           return
@@ -27,30 +56,36 @@ define([], function() {
         } else {
           this.email_message = data.data.email
           this.password_message = data.data.password
+          this.type_message = data.data.type
         }
       },
       process_success: function(data) {
-        axios.defaults.headers.common['Authorization'] = "Bearer " + data.data.data.token
-        console.log(data.data.confirmation_code)
+        jquery.ajaxSetup({
+          headers: {'Authorization': "Bearer " + data.data.token}
+        })
         this.$router.push({name:'confirmation'})
       },
       register: function() {
-        if (this.loading) {
+        if (this.loading || !this.is_valid) {
           return
         }
         var self = this;
         self.clear()
         self.loading = true;
-        setTimeout(function() {
-          axios.post('http://167.172.150.95:3001/register', {
-            email: self.email,
-            type: '1',
-            password: self.password
-          }).then(self.process_success).catch(function(data) {
-            console.log(data)
-            self.process_response(data.response.data)
-          })
-        }, 1000)
+
+        jquery.ajax({
+          path: 'register',
+          method: 'post',
+          json: {email: this.email, password: this.password, type: [this.type]},
+          contentType: 'application/json',
+          success: self.process_success,
+          error: function(response) {
+            if (response.responseJSON) {
+              self.process_response(response.responseJSON);
+            }
+            self.loading = false
+          }
+        })
       }
     }
   }

@@ -2,44 +2,24 @@
 // https://vuejs.org/v2/guide/
 // https://router.vuejs.org/guide/#javascript
 
-requirejs([], function() {
-  var routes = [
-    {
-      name: 'login',
-      path: '/login',
-      component: lazyPage('login')
-    },
-    {
-      name: 'registration',
-      path: '/registration',
-      component: lazyPage('registration')
-    },
-    {
-      name: 'confirmation',
-      path: '/confirmation',
-      component: lazyPage('confirmation')
-    },      
-    {
-      name: 'internal',
-      path: '/internal',
-      component: lazyPage('internal'),
-      children: [
-        {
-          name: 'welcome',
-          path: "welcome",
-          component: lazyPage('welcome')
-        }
-      ]
-    },
-  ]
+requirejs.config({
+  baseUrl: '/static/js',
+  paths: {
+    'jquery': 'jquery/jquery.min',
+    'waitme': 'jquery/waitMe.min',
+    'foundation': 'jquery/foundation.min',
+    'vue': 'vue/vue',
+    'vue-router': 'vue/vue-router',
+    'text': 'require/text',
+    'lazy': 'require/lazy'
+  }
+})
 
-  var router = new VueRouter({
-    mode: 'history',
-    routes: routes
-  })
 
+
+requirejs(['vue', 'setup'], function(Vue, setup) {
   var vue = new Vue({
     el: "#app",
-    router: router
+    router: setup.router
   })
 })

@@ -1,23 +1,23 @@
-<div id="login-page" class="grid-x grid-padding-x align-center-middle background" style="height: 100vh;">
+<wait-me id="login-page" class="grid-x grid-padding-x align-center-middle background" style="height: 100vh;" :loading="loading">
   <div class="cell large-3 medium-6 small-9 card">
     <form @submit.prevent="login">   
       <div class="" :class="{'has-error': email_message}">
         <label for="email" class="form-label">Email</label>
-        <input id="email" :disabled="loading" class="form-input" type="text" v-model="email">
+        <input id="email" class="form-input" type="text" v-model="email">
         <p class="help-text">{{ email_message }}</p>
       </div>
       <div class="" :class="{'has-error': password_message}">
         <label for="password" class="">Senha</label>
-        <input id="password" :disabled="loading" class="form-input" type="password" v-model="password">
-        <p class="text-center">{{ password_message }}</p>
+        <input id="password" class="form-input" type="password" v-model="password">
+        <p class="help-text">{{ password_message }}</p>
       </div>
-      <button type="submit" class="button expanded" :class="{disabled: !(password && email), loading: loading}"> Login </button>
+      <button type="submit" class="button expanded" :class="{disabled: !(password && email)}"> Login </button>
       <div class="">
-        <p class="text-center">Ainda não tem uma conta? <a v-bind:href="('registration')"> Cadastre-se </a></p>
+        <p class="text-center">Ainda não tem uma conta? <a @click.prevent="$router.push({name:'registration'})"> Cadastre-se </a></p>
       </div>
-      <div class="">
-        <p class="text-center">{{ message }}</p>
+      <div class="has-error">
+        <p class="help-text text-center">{{ message }}</p>
       </div>
     </form>
   </div>
-</div>
+</wait-me>

@@ -1,10 +1,10 @@
-define([], function() {
+define(['jquery'], function(jquery) {
     return {
       data: function() {
+        let url_search = new URLSearchParams(window.location.search)
         return {
           loading: false,
-          message: null,
-          code: null,
+          code: url_search.get('code') || null,
           code_message: null,
         }
       },
@@ -17,30 +17,35 @@ define([], function() {
           this.loading = false
           if (data.success)
             return
-          if (typeof data.data === 'string') {
-            this.message = data.data
-          } else {
-            // this.email_message = data.data.email
-          }
+          this.code_message = data.message
         },
         process_success: function(data) {
-        //   axios.defaults.headers.common['Authorization'] = "Bearer " + data.data.data.token
-          console.log(data)
-          this.$router.push({name:'welcome'})
+          var headers = jquery.ajaxSettings.headers || {}
+          if (!headers['Authorization']) {
+            this.$router.push({name:'login'})
+          } else {
+            this.$router.push({name:'welcome'})
+          }
         },
-        cofirmation: function() {
+        confirm: function() {
           if (this.loading) {
             return
           }
           var self = this;
           self.clear()
           self.loading = true;
-          setTimeout(function() {
-            axios.get('http://167.172.150.95:3001/confirmation?code=' + self.code).then(self.process_success).catch(function(data) {
-              console.log(data)
-              self.process_response(data.response.data)
-            })
-          }, 1000)
+          jquery.ajax({
+            path: 'confirmation?code=' + self.code,
+            method: 'get',
+            success: function (data) {
+              self.loading = false
+              if (data.success === true) {
+                self.process_success(data.data)
+              } else {
+                self.process_response(data.data)
+              }
+            }
+          })
         }
       }
     }
